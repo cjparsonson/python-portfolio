@@ -20,8 +20,6 @@ API_KEY = os.getenv("ALPHAV_KEY")
 
 #TODO 1. - Get yesterday's closing stock price. Hint: You can perform list comprehensions on Python dictionaries. e.g. [new_value for (key, value) in dictionary.items()]
 
-today = datetime.datetime.now()
-print(today.strftime("%A"))
 # Define parameters
 parameters = {
     "function": "TIME_SERIES_DAILY",
@@ -29,17 +27,23 @@ parameters = {
     "outputsize": "compact",
     "apikey": API_KEY
 }
+# API Call
 response = requests.get(url=STOCK_ENDPOINT, params=parameters)
 response.raise_for_status()
-
+# Convert response to JSON
 closing_data = response.json()
+# Save only the daily time series as variable
 time_series = closing_data['Time Series (Daily)']
-
-yesterday_series = [series for (date, series) in time_series.items() if date == '2022-09-16']
-print(yesterday_series)
+# List comprehension to allow indexing
+yesterday_series = [series for (date, series) in time_series.items()]
+# Get 'yesterday' by calling 0 index
+yesterday_close = yesterday_series[0]['4. close']
 
 
 #TODO 2. - Get the day before yesterday's closing stock price
+
+# Get day before yesterday by calling 1 index
+day_before_close = yesterday_series[1]['4. close']
 
 #TODO 3. - Find the positive difference between 1 and 2. e.g. 40 - 20 = -20, but the positive difference is 20. Hint: https://www.w3schools.com/python/ref_func_abs.asp
 
