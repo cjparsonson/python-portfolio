@@ -37,18 +37,22 @@ time_series = closing_data['Time Series (Daily)']
 # List comprehension to allow indexing
 yesterday_series = [series for (date, series) in time_series.items()]
 # Get 'yesterday' by calling 0 index
-yesterday_close = yesterday_series[0]['4. close']
+yesterday_close = float(yesterday_series[0]['4. close'])
 
 
 #TODO 2. - Get the day before yesterday's closing stock price
 
 # Get day before yesterday by calling 1 index
-day_before_close = yesterday_series[1]['4. close']
+day_before_close = float(yesterday_series[1]['4. close'])
 
 #TODO 3. - Find the positive difference between 1 and 2. e.g. 40 - 20 = -20, but the positive difference is 20. Hint: https://www.w3schools.com/python/ref_func_abs.asp
+pos_difference = abs(yesterday_close-day_before_close)
 
 #TODO 4. - Work out the percentage difference in price between closing price yesterday and closing price the day before yesterday.
+average = (yesterday_close+day_before_close)/2
 
+percentage_diff = (pos_difference/average)*100
+print(percentage_diff)
 #TODO 5. - If TODO4 percentage is greater than 5 then print("Get News").
 
     ## STEP 2: https://newsapi.org/ 
