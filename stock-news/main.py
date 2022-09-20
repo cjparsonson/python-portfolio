@@ -7,8 +7,8 @@ load_dotenv()
 
 
 # Global variables
-STOCK_NAME = "TSLA"
-COMPANY_NAME = "Tesla Inc"
+STOCK_NAME = "BAESY"
+COMPANY_NAME = "BAE Systems Plc"
 
 STOCK_ENDPOINT = "https://www.alphavantage.co/query"
 NEWS_ENDPOINT = "https://newsapi.org/v2/everything"
@@ -49,8 +49,12 @@ day_before_close = float(yesterday_series[1]['4. close'])
 pos_difference = abs(yesterday_close-day_before_close)
 
 #TODO 4. - Work out the percentage difference in price between closing price yesterday and closing price the day before yesterday.
-average = (yesterday_close+day_before_close)/2
 
+print(yesterday_close)
+print(day_before_close)
+# Percentage difference can be found by dividing the absolute (positive) value of change between 2 value by the average#
+# of those values multiplied by 100
+average = (yesterday_close+day_before_close)/2
 percentage_diff = (pos_difference/average)*100
 print(percentage_diff)
 #TODO 5. - If TODO4 percentage is greater than 5 then print("Get News").
