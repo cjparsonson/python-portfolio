@@ -11,14 +11,15 @@ STOCK_NAME = "BAESY"
 COMPANY_NAME = "BAE Systems Plc"
 
 STOCK_ENDPOINT = "https://www.alphavantage.co/query"
-NEWS_ENDPOINT = "https://newsapi.org/v2/everything"
+NEWS_ENDPOINT = "http://eventregistry.org/api/v1/article/getArticles"
+# "https://newsapi.org/v2/everything"
 
 API_KEY = os.getenv("ALPHAV_KEY")
 
     ## STEP 1: Use https://www.alphavantage.co/documentation/#daily - Read docs
 # When stock price increase/decreases by 5% between yesterday and the day before yesterday then print("Get News").
 
-#TODO 1. - Get yesterday's closing stock price. Hint: You can perform list comprehensions on Python dictionaries. e.g. [new_value for (key, value) in dictionary.items()]
+
 
 # Define parameters
 parameters = {
@@ -40,16 +41,13 @@ yesterday_series = [series for (date, series) in time_series.items()]
 yesterday_close = float(yesterday_series[0]['4. close'])
 
 
-#TODO 2. - Get the day before yesterday's closing stock price
+
 
 # Get day before yesterday by calling 1 index
 day_before_close = float(yesterday_series[1]['4. close'])
 
-#TODO 3. - Find the positive difference between 1 and 2. e.g. 40 - 20 = -20, but the positive difference is 20. Hint: https://www.w3schools.com/python/ref_func_abs.asp
+#Hint: https://www.w3schools.com/python/ref_func_abs.asp
 pos_difference = abs(yesterday_close-day_before_close)
-
-#TODO 4. - Work out the percentage difference in price between closing price yesterday and closing price the day before yesterday.
-
 print(yesterday_close)
 print(day_before_close)
 # Percentage difference can be found by dividing the absolute (positive) value of change between 2 value by the average#
@@ -58,11 +56,21 @@ average = (yesterday_close+day_before_close)/2
 percentage_diff = (pos_difference/average)*100
 print(percentage_diff)
 #TODO 5. - If TODO4 percentage is greater than 5 then print("Get News").
-
+if percentage_diff > 5:
+    print("Get News")
     ## STEP 2: https://newsapi.org/ 
     # Instead of printing ("Get News"), actually get the first 3 news pieces for the COMPANY_NAME. 
 
 #TODO 6. - Instead of printing ("Get News"), use the News API to get articles related to the COMPANY_NAME.
+
+news_parameters = {
+    "action": "getArticles",
+    "keyword": "BAE Systems Plc",
+    "articlesPage": 1,
+    "articlesCount": 10,
+    "articlesSortBy": "date",
+
+}
 
 #TODO 7. - Use Python slice operator to create a list that contains the first 3 articles. Hint: https://stackoverflow.com/questions/509211/understanding-slice-notation
 
