@@ -15,6 +15,7 @@ NEWS_ENDPOINT = "http://eventregistry.org/api/v1/article/getArticles"
 # "https://newsapi.org/v2/everything"
 
 API_KEY = os.getenv("ALPHAV_KEY")
+NEWS_Key = os.getenv("NEWS_KEY")
 
     ## STEP 1: Use https://www.alphavantage.co/documentation/#daily - Read docs
 # When stock price increase/decreases by 5% between yesterday and the day before yesterday then print("Get News").
@@ -67,14 +68,28 @@ news_parameters = {
     "action": "getArticles",
     "keyword": "BAE Systems Plc",
     "articlesPage": 1,
-    "articlesCount": 10,
+    "articlesCount": 5,
     "articlesSortBy": "date",
-
+    "articlesSortByAsc": False,
+    "articlesArticleBodyLen": -1,
+    "resultType": "articles",
+    "dataType": [
+        "news"
+    ],
+    "apiKey": NEWS_Key,
+    "forceMaxDataTimeWindow": 31
 }
+
+news_response = requests.get(NEWS_ENDPOINT, news_parameters)
+news_response.raise_for_status()
+news_data = news_response.json()
+
+print(news_data)
 
 #TODO 7. - Use Python slice operator to create a list that contains the first 3 articles. Hint: https://stackoverflow.com/questions/509211/understanding-slice-notation
 
-
+news_slice = news_data['articles']['results'][:3]
+print(news_slice[0])
     ## STEP 3: Use twilio.com/docs/sms/quickstart/python
     #to send a separate message with each article's title and description to your phone number. 
 
