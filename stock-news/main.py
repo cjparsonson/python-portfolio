@@ -71,7 +71,7 @@ news_parameters = {
     "articlesCount": 5,
     "articlesSortBy": "date",
     "articlesSortByAsc": False,
-    "articlesArticleBodyLen": -1,
+    "articlesArticleBodyLen": 500,
     "resultType": "articles",
     "dataType": [
         "news"
@@ -96,7 +96,7 @@ print(news_slice)
 
 
 article_list = [(x['title'], x['body']) for x in news_slice]
-print(article_list)
+print(article_list[0][0])
 #TODO 9. - Send each article as a separate message via Twilio. 
 
 
