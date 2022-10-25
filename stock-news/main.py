@@ -3,6 +3,7 @@ import requests
 import os
 import datetime
 from dotenv import load_dotenv
+from twilio.rest import Client
 load_dotenv()
 
 
@@ -17,6 +18,11 @@ NEWS_ENDPOINT = "http://eventregistry.org/api/v1/article/getArticles"
 API_KEY = os.getenv("ALPHAV_KEY")
 NEWS_Key = os.getenv("NEWS_KEY")
 
+ACCOUNT_SID = os.getenv("TWILIO_SID")
+AUTH_TOKEN = os.getenv("TWILIO_TOKEN")
+
+USER_PHONE = "+447908669021"
+TWILIO_PHONE = os.getenv("TWILIO_PHONE")
     ## STEP 1: Use https://www.alphavantage.co/documentation/#daily - Read docs
 # When stock price increase/decreases by 5% between yesterday and the day before yesterday then print("Get News").
 
@@ -97,9 +103,9 @@ print(news_slice)
 
 article_list = [(x['title'], x['body']) for x in news_slice]
 print(article_list[0][0])
+
+
 #TODO 9. - Send each article as a separate message via Twilio. 
-
-
 
 #Optional TODO: Format the message like this: 
 """
@@ -111,4 +117,23 @@ or
 Headline: Were Hedge Funds Right About Piling Into Tesla Inc. (TSLA)?. 
 Brief: We at Insider Monkey have gone over 821 13F filings that hedge funds and prominent investors are required to file by the SEC The 13F filings show the funds' and investors' portfolio positions as of March 31st, near the height of the coronavirus market crash.
 """
+
+client = Client(ACCOUNT_SID, AUTH_TOKEN)
+
+for i in range(0, len(article_list)):
+    message_body = f"""
+    {STOCK_NAME}: {percentage_diff}
+    {article_list[i][0]}
+    
+    {article_list[i][1]}
+    """
+    message = client.messages.create(
+        to=USER_PHONE,
+        from_=TWILIO_PHONE,
+        body=message_body
+    )
+    print(message.sid)
+
+
+
 
