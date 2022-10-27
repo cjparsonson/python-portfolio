@@ -52,12 +52,18 @@ yesterday_close = float(yesterday_series[0]['4. close'])
 day_before_close = float(yesterday_series[1]['4. close'])
 
 # Hint: https://www.w3schools.com/python/ref_func_abs.asp
+difference = yesterday_close - day_before_close
 pos_difference = abs(yesterday_close-day_before_close)
+
+if difference > 0:
+    up_down = "⬆️"
+else:
+    up_down = "⬇️"
 
 # Percentage difference can be found by dividing the absolute (positive) value of change between 2 value by the average#
 # of those values multiplied by 100
 average = (yesterday_close+day_before_close)/2
-percentage_diff = (pos_difference/average)*100
+percentage_diff = round((pos_difference/average)*100)
 
 
 # If TODO4 percentage is greater than 5 then print("Get News").
@@ -87,7 +93,7 @@ for i in range(0, len(article_list)):
     excerpt = (article_list[i][1])
     link = (article_list[i][2])
     message_body = f"""
-    {STOCK_NAME}: {percentage_diff}
+    {STOCK_NAME}: {up_down} {percentage_diff}
     {title}
     
     {excerpt}
