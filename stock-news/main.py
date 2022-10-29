@@ -72,7 +72,7 @@ if percentage_diff > 5:
     ## STEP 2: https://newsapi.org/ 
     # Instead of printing ("Get News"), actually get the first 3 news pieces for the COMPANY_NAME. 
 
-#TODO 6. - Instead of printing ("Get News"), use the News API to get articles related to the COMPANY_NAME.
+#Instead of printing ("Get News"), use the News API to get articles related to the COMPANY_NAME.
 
 querystring = {"q":"\"BAE Systems Plc\"","to_rank":10000,"lang":"en","sort_by":"relevancy","page":"1"}
 
