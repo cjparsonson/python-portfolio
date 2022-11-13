@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/python-portfolio.iml" filepath="$PROJECT_DIR$/.idea/python-portfolio.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/rain_alert.iml" filepath="$PROJECT_DIR$/.idea/rain_alert.iml" />
     </modules>
   </component>
 </project>
