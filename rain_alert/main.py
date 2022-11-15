@@ -3,8 +3,8 @@ import os
 from dotenv import load_dotenv
 from twilio.rest import Client
 load_dotenv()
-account_sid = os.getenv("TWILIOSID2")
-auth_token = os.getenv("TWILIOKEY2")
+account_sid = os.getenv("TWILIOSID")
+auth_token = os.getenv("TWILIOTOKEN")
 
 OWM_Endpoint = os.getenv("OWMENDPOINT")
 
