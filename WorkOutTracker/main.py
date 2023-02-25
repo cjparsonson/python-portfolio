@@ -25,6 +25,7 @@ TIME = DATETIME_TODAY.strftime("%H:%M:%S")
 EXERCISE_ENDPOINT = "https://trackapi.nutritionix.com/v2/natural/exercise"
 SHEETY_GET = os.getenv('GET_ENDPOINT')
 SHEETY_POST = os.getenv('POST_ENDPOINT')
+SHEETY_TOKEN = os.getenv('BEARER_TOKEN')
 
 
 # Get Exercise Query
@@ -55,14 +56,15 @@ exercise_params = {
     "workout": {
         "date": DATE,
         "time": TIME,
-        "exercise": exercise_name,
+        "exercise": exercise_name.title(),
         "duration": exercise_duration,
         "calories": exercise_calories
     }
 }
 
 # Post row - Sheety needs the params sent as a json
-response_sheety = requests.post(url=SHEETY_POST, json=exercise_params)
+sheety_headers = {"Authorization": f"Bearer {SHEETY_TOKEN}"}
+response_sheety = requests.post(headers=sheety_headers, url=SHEETY_POST, json=exercise_params)
 response_sheety.raise_for_status()
 print(response_sheety)
 
