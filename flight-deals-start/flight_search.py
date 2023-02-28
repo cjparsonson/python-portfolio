@@ -4,7 +4,8 @@ from flight_data import FlightData, FlightDataReturn
 
 class FlightSearch:
     # This class is responsible for talking to the Flight Search API.
-    def get_IATA(self, location: str, key: str, endpoint: str) -> str:
+    @staticmethod
+    def get_iata(location: str, key: str, endpoint: str) -> str:
         # Build request
         search_header = {
             "apikey": key
@@ -19,7 +20,8 @@ class FlightSearch:
         location_data = response.json()
         return location_data['locations'][0]['code']
 
-    def search_flight(self, flight_data_obj, key, endpoint):
+    @staticmethod
+    def search_flight(flight_data_obj, key, endpoint) -> FlightDataReturn | None:
         search_header = {
             "apikey": key
         }
