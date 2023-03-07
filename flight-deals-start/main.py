@@ -5,6 +5,7 @@
 from data_manager import DataManager
 from flight_search import FlightSearch
 from flight_data import FlightData, FlightDataReturn
+from notification_manager import NotificationManager
 # Imports
 import os
 import datetime
@@ -22,6 +23,8 @@ KIWI_QUERY = os.getenv('KIWI_QUERY_END')
 KIWI_SEARCH = os.getenv('KIWI_SEARCH_END')
 TWILIO_SID = os.getenv('TWILIO_SID')
 TWILIO_AUTH = os.getenv('TWILIO_AUTH')
+MOBILE = os.getenv('MOBILE')
+MOBILE_FROM = os.getenv('MOBILE_FROM')
 
 # Globals
 LOCAL_AIRPORT = "LON"
@@ -31,6 +34,7 @@ DATE_FORWARD_6_MONTHS = (datetime.datetime.now() + datetime.timedelta(days=(30 *
 # Initialize classes
 DataManager = DataManager(SHEETY_TOKEN, SHEETY_GET, SHEETY_PUT)
 FlightSearch = FlightSearch()
+
 
 sheet_data = DataManager.get_location_rows()
 
@@ -58,13 +62,14 @@ for location in sheet_data:
 
 # Compare prices
 for index, result in enumerate(search_objects):
-    print(f"""
-{result.destination_city}
-Current Price £{result.price} - Target price £{sheet_data[index]['lowestPrice']}
-            """)
+    if result:
+        print(f"""
+    {result.destination_city}
+    Current Price £{result.price} - Target price £{sheet_data[index]['lowestPrice']}
+                """)
 
-    if int(result.price) < int(sheet_data[index]['lowestPrice']):
-        pass
+        if int(result.price) < int(sheet_data[index]['lowestPrice']):
+            notification = NotificationManager(result, TWILIO_SID, TWILIO_AUTH, MOBILE, MOBILE_FROM)
 
 
 
